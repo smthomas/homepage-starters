@@ -2,24 +2,24 @@ import * as React from "react"
 import { graphql } from "gatsby"
 import { Space, Container, Section, FlexList, Text, Logo } from "./ui"
 
-function LogoItem(props) {
-  if (!props.image) return false
+function LogoItem({ alt, image }) {
+  if (!image) return false
 
-  return <Logo alt={props.alt} image={props.image} size="medium" />
+  return <Logo alt={alt} image={image.gatsbyImageData} size="medium" />
 }
 
-export default function LogoList(props) {
+export default function LogoList({ text, logos }) {
   return (
     <Section>
       <Container width="narrow">
-        {props.text && (
+        {text && (
           <Text center variant="lead">
-            {props.text}
+            {text}
           </Text>
         )}
         <Space size={4} />
         <FlexList gap={4} variant="center">
-          {props.logos.map(
+          {logos.map(
             (logo) =>
               logo && (
                 <li key={logo.id}>
@@ -34,7 +34,7 @@ export default function LogoList(props) {
 }
 
 export const query = graphql`
-  fragment HomepageLogoListContent on HomepageLogoList {
+  fragment HomepageLogoList on node__homepage_logo_list {
     id
     text
     logos {
